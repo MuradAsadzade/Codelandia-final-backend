@@ -1,5 +1,6 @@
 class Payment{
     constructor(props){
+        this.id=props?.id;
         this.order_id=props?.order_id;
         this.payment_method=props?.payment_method;
         this.payment_status=props?.payment_status;

@@ -3,7 +3,7 @@ const pool = require("../config/db.js");
 const { ErrorResult, SuccessResult, EmptyResult } = require("../utils/results.js");
 
 const getAllProductImages = async () => {
-    let result = await pool.query("SELECT * FROM product_images WHERE deleted=0");
+    let result = await pool.query("SELECT * FROM product_images WHERE deleted=0 ORDER BY id");
     result = ProductImage.MapAll(result.rows);
     if (result.length == 0) {
         return new SuccessResult(null, "No ProductImage found");

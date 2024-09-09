@@ -1,5 +1,6 @@
 class CartItem{
     constructor(props){
+        this.id=props?.id;
         this.user_id=props?.user_id;
         this.product_id=props?.product_id;
         this.quantity=props?.quantity;

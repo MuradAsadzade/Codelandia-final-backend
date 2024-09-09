@@ -1,5 +1,6 @@
 class OrderItem{
     constructor(props){
+        this.id=props?.id;
         this.order_id=props?.order_id;
         this.product_id=props?.product_id;
         this.quantity=props?.quantity;

@@ -4,7 +4,7 @@ const User = require("../models/user/user.js")
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async () => {
-    let data = await pool.query("SELECT * FROM users where users.deleted=0");
+    let data = await pool.query("SELECT * FROM users where users.deleted=0 ORDER BY id");
     data = User.MapAll(data.rows);
     if (data.length == 0) {
         return new ErrorResult(null, "No users have been created")

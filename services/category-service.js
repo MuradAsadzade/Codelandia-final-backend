@@ -4,7 +4,7 @@ const {ErrorResult,SuccessResult,EmptyResult}=require("../utils/results.js")
 
 
 const getAllCategories=async ()=>{
-    let result=await pool.query("SELECT * FROM categories where categories.deleted=0");
+    let result=await pool.query("SELECT * FROM categories where categories.deleted=0 ORDER BY id");
     // result=Category.MapAll(result.rows);
     if(result.length==0){
         return new SuccessResult(null,"No category found")

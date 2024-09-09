@@ -5,7 +5,7 @@ const { ErrorResult, SuccessResult, EmptyResult } = require("../utils/results.js
 
 const getAllPayments = async () => {
     try {
-        const result = await pool.query("SELECT * FROM payments WHERE deleted = 0");
+        const result = await pool.query("SELECT * FROM payments WHERE deleted = 0 ORDER BY id");
         if (result.rows.length === 0) {
             return new SuccessResult(null, "No payments found");
         }

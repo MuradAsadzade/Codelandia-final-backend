@@ -4,7 +4,7 @@ const { ErrorResult, SuccessResult, EmptyResult } = require("../utils/results.js
 
 
 const getAllCartItems = async () => {
-    let result = await pool.query("SELECT * FROM cart_items where deleted=0");
+    let result = await pool.query("SELECT * FROM cart_items where deleted=0 ORDER BY id");
     result = CartItem.MapAll(result.rows);
     if (result.length == 0) {
         return new SuccessResult(null, "No CartItem found")
@@ -55,16 +55,28 @@ const deleteCartItem = async (id) => {
 }
 
 const updateCartItem = async (id, cartItem) => {
+    try {
+        let res = await pool.query(
+            'UPDATE cart_items SET user_id=$1, product_id=$2, quantity=$3 WHERE id=$4 AND deleted=0 RETURNING *',
+            [cartItem.user_id, cartItem.product_id, cartItem.quantity, id]
+        );
 
-    let res = await pool.query('UPDATE cart_items SET user_id=$1, product_id=$2,quantity=$3 WHERE id=$4 AND deleted=0 returning *', [cartItem.user_id, cartItem.product_id, cartItem.quantity, id]);
+        // If no rows were returned, the item wasn't found or wasn't updated due to the condition
+        if (!res.rows.length) {
+            return new ErrorResult(null, "CartItem was not found or could not be updated");
+        }
 
-    if (res.rows[0] == undefined) {
-        return new ErrorResult(null, "CartItem was not found")
+        // Map the updated cart item
+        let result = CartItem.MapOne(res.rows[0]);
+
+        return new SuccessResult(result, "CartItem updated successfully");
+    } catch (error) {
+        // Handle any other errors that might occur during the query
+        console.error("Error updating cart item:", error);
+        return new ErrorResult(null, "An error occurred while updating the cart item");
     }
-    let result = CartItem.MapOne(res.rows[0]);
+};
 
-    return new SuccessResult(result, "CartItem updated");
-}
 
 const updateCartItemUserId = async (id, user_id) => {
 

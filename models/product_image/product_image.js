@@ -1,5 +1,6 @@
 class ProductImage{
     constructor(props){
+        this.id=props?.id;
         this.product_id=props?.product_id;
         this.image_url=props?.image_url;
 

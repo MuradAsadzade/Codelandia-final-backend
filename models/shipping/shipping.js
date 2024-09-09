@@ -1,5 +1,6 @@
 class Shipping{
     constructor(props){
+        this.id=props?.id;
         this.order_id=props?.order_id;
         this.shipping_address=props?.shipping_address;
         this.shipping_method=props?.shipping_method;

@@ -1,5 +1,6 @@
 class Review{
     constructor(props){
+        this.id=props?.id;
         this.product_id=props?.product_id;
         this.user_id=props?.user_id;
         this.rating=props?.rating;

@@ -4,7 +4,7 @@ const {ErrorResult,SuccessResult,EmptyResult}=require("../utils/results.js")
 
 
 const getAllProducts=async ()=>{
-    let result=await pool.query("SELECT * FROM products where products.deleted=0");
+    let result=await pool.query("SELECT * FROM products where products.deleted=0 ORDER BY id");
     result=Product.MapAll(result.rows);
     if(result.length==0){
         return new SuccessResult(null,"No products found")

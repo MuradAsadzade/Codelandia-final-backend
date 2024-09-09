@@ -4,7 +4,7 @@ const {ErrorResult,SuccessResult,EmptyResult}=require("../utils/results.js")
 
 
 const getAllOrderItems=async ()=>{
-    let result=await pool.query("SELECT * FROM order_items where deleted=0");
+    let result=await pool.query("SELECT * FROM order_items where deleted=0 ORDER BY id");
     result=OrderItem.MapAll(result.rows);
     if(result.length==0){
         return new SuccessResult(null,"No OrderItem found")

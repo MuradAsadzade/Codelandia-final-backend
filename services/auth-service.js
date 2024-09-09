@@ -19,7 +19,7 @@ const loginUser = async (user) => {
     userExistingResult[1]
   );
 
-  if (!passwordCheckResult) return new ErrorResult("Incorrect password");
+  if (!passwordCheckResult) return new ErrorResult(null,"Incorrect password");
 
   const token =  jwt.sign(
     { username: user.username },
@@ -30,7 +30,7 @@ const loginUser = async (user) => {
   const expireDate = new Date();
   expireDate.setHours(expireDate.getHours() + 1);
   const accessToken = new AccessToken(token, expireDate.toString());
-  return new SuccessResult("User logged in successfully", accessToken);
+  return new SuccessResult(accessToken,"User logged in successfully");
 };
 
 
@@ -46,10 +46,10 @@ const registerUser = async (username, email, password, password_again) => {
   };
 
   if (usernameCheck.rows.length > 0) {
-    throw new Error('Username  already exists');
+    return  new ErrorResult(null,'Username  already exists');
   }
   if (emailCheck.rows.length > 0) {
-    throw new Error('Email  already exists');
+    return new ErrorResult(null,'Email  already exists');
   }
 
   
