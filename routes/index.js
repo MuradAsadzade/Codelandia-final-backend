@@ -11,6 +11,7 @@ const paymentRoute=require("./payment-routes.js");
 const shippingRoute=require("./shipping-routes.js");
 const reviewRoute=require("./review-routes.js");
 const productImageRoute=require("./product_image-routes.js");
+const adminRoute=require("./admin-routes.js")
 
 const router=express.Router();
 router.use("/categories",categoryRoute);
@@ -23,7 +24,7 @@ router.use("/cart-items",cartItemRoute);
 router.use("/payments",paymentRoute);
 router.use("/shippings",shippingRoute);
 router.use("/reviews",reviewRoute);
-router.use("/product-images/",productImageRoute);
-
+router.use("/product-images",productImageRoute);
+router.use("/admins",adminRoute);
 
 module.exports=router;
